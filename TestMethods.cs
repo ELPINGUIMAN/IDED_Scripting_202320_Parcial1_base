@@ -148,26 +148,29 @@ namespace TestProject1
                 return false;
             }
 
-            Queue<Ticket>[] resultQueues = ClassifyTickets(new List<Ticket> { ticket });
-
-            if (ticket.RequestType == Ticket.ERequestType.Payment && targetQueue == resultQueues[0])
+            if (ticket.RequestType == Ticket.ERequestType.Payment && targetQueue == ClassifyTickets(new List<Ticket> { ticket })[0])
             {
                 targetQueue.Enqueue(ticket);
                 return true;
             }
-            else if (ticket.RequestType == Ticket.ERequestType.Subscription && targetQueue == resultQueues[1])
+            else if (ticket.RequestType == Ticket.ERequestType.Subscription && targetQueue == ClassifyTickets(new List<Ticket> { ticket })[1])
             {
                 targetQueue.Enqueue(ticket);
                 return true;
             }
-            else if (ticket.RequestType == Ticket.ERequestType.Cancellation && targetQueue == resultQueues[2])
+            else if (ticket.RequestType == Ticket.ERequestType.Cancellation && targetQueue == ClassifyTickets(new List<Ticket> { ticket })[2])
             {
                 targetQueue.Enqueue(ticket);
                 return true;
             }
 
             return false;
-
         }
+
+
+
+
+
+
     }
 }
