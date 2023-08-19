@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static TestProject1.Ticket;
 
 namespace TestProject1
 {
@@ -99,7 +100,14 @@ namespace TestProject1
 
         internal static Dictionary<int, EValueType> SortDictionaryRegistries(Dictionary<int, EValueType> sourceDict)
         {
-            Dictionary<int, EValueType> result = null;
+            List<int> sortedKeys = new List<int>(sourceDict.Keys);
+            sortedKeys.Sort((a, b) => b.CompareTo(a));
+
+            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
+            foreach (int key in sortedKeys)
+            {
+                result[key] = sourceDict[key];
+            }
 
             return result;
         }
@@ -115,8 +123,18 @@ namespace TestProject1
 
             foreach (var ticket in sourceList)
             {
-                int queueIndex = (int)ticket.RequestType;
-                result[queueIndex].Enqueue(ticket);
+                if (ticket.RequestType == ERequestType.Payment)
+                {
+                    result[0].Enqueue(ticket);
+                }
+                else if (ticket.RequestType == ERequestType.Subscription)
+                {
+                    result[1].Enqueue(ticket);
+                }
+                else if (ticket.RequestType == ERequestType.Cancellation)
+                {
+                    result[2].Enqueue(ticket);
+                }
             }
 
             return result;
