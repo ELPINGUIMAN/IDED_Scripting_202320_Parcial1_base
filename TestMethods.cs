@@ -106,16 +106,31 @@ namespace TestProject1
 
         internal static Queue<Ticket>[] ClassifyTickets(List<Ticket> sourceList)
         {
-            Queue<Ticket>[] result = null;
+            Queue<Ticket>[] result = new Queue<Ticket>[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                result[i] = new Queue<Ticket>();
+            }
+
+            foreach (var ticket in sourceList)
+            {
+                int queueIndex = (int)ticket.RequestType;
+                result[queueIndex].Enqueue(ticket);
+            }
 
             return result;
         }
 
         internal static bool AddNewTicket(Queue<Ticket> targetQueue, Ticket ticket)
         {
-            bool result = false;
+            if (ticket.Turn < 1 || ticket.Turn > 99)
+            {
+                return false;
+            }
 
-            return result;
+            targetQueue.Enqueue(ticket);
+            return true;
         }        
     }
 }
