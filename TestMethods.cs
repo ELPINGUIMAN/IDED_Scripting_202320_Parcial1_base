@@ -22,27 +22,26 @@ namespace TestProject1
             {
                 int nextGreater = -1;
 
-                // While tempStack is not empty and the top element is smaller or equal
-                // to the current element, pop elements from tempStack.
+                
                 while (tempStack.Count > 0 && tempStack.Peek() <= current)
                 {
                     tempStack.Pop();
                 }
 
-                // If there's a larger element in tempStack, assign it to nextGreater.
+               
                 if (tempStack.Count > 0)
                 {
                     nextGreater = tempStack.Peek();
                 }
 
-                // Push nextGreater onto the result stack.
+               
                 result.Push(nextGreater);
 
-                // Push the current element onto tempStack.
+               
                 tempStack.Push(current);
             }
 
-            // Reverse the result stack to match the original order.
+            
             Stack<int> reversedResult = new Stack<int>();
             while (result.Count > 0)
             {
