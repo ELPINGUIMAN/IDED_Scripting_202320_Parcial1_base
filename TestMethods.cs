@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static TestProject1.Ticket;
 
@@ -145,32 +146,22 @@ namespace TestProject1
         {
             if (ticket.Turn < 1 || ticket.Turn > 99)
             {
-                return false;
+                return false; 
             }
 
-            if (ticket.RequestType == Ticket.ERequestType.Payment && targetQueue == ClassifyTickets(new List<Ticket> { ticket })[0])
+            Ticket.ERequestType targetRequestType = ticket.RequestType;
+
+            foreach (Ticket existingTicket in targetQueue)
             {
-                targetQueue.Enqueue(ticket);
-                return true;
-            }
-            else if (ticket.RequestType == Ticket.ERequestType.Subscription && targetQueue == ClassifyTickets(new List<Ticket> { ticket })[1])
-            {
-                targetQueue.Enqueue(ticket);
-                return true;
-            }
-            else if (ticket.RequestType == Ticket.ERequestType.Cancellation && targetQueue == ClassifyTickets(new List<Ticket> { ticket })[2])
-            {
-                targetQueue.Enqueue(ticket);
-                return true;
+                if (existingTicket.RequestType != targetRequestType)
+                {
+                    return false; 
+                }
             }
 
-            return false;
+            targetQueue.Enqueue(ticket);
+
+            return true;
         }
-
-
-
-
-
-
     }
 }
